@@ -8,16 +8,11 @@
     "description": {
       "type": "string"
     },
-    "category": {
-      "type": "string"
-    },
     "$schema": {
       "type": "string"
     }
   },
   "required": [
-    "title",
-    "description",
-    "category"
+    "title"
   ]
 }

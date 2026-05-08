@@ -1,0 +1,16 @@
+---
+import Layout from "./Layout.astro";
+import DocsSidebar from "../components/DocsSidebar.astro";
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="docs-layout">
+    <DocsSidebar />
+
+    <article class="docs-content">
+      <slot />
+    </article>
+  </div>
+</Layout>

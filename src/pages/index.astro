@@ -1,35 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PackageCard from '../components/PackageCard.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
-
-// 1. Fetch the packages
-// In Astro 6, getCollection returns the entries from the loader defined in content.config.ts
-const packages = await getCollection('packages');
-
-// 2. Sort the packages
-// Using a simpler sort syntax; Astro 6 entries still use .data for frontmatter
-const sortedPackages = packages.sort((a: CollectionEntry<'packages'>, b: CollectionEntry<'packages'>) => a.data.title.localeCompare(b.data.title));
+import Layout from "../layouts/Layout.astro";
+import PackageCard from "../components/PackageCard.astro";
 ---
 
-<Layout title="Home">
-    <header class="py-16 md:py-24 text-center max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
-            Modular assets for <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">Unity Development</span>
-        </h1>
-        <p class="text-lg text-slate-500 leading-relaxed mb-8">
-            A curated collection of highly optimized shaders, editor tools, and VFX packages. 
-        </p>
-    </header>
+<Layout title="Laplahce">
+  <section class="hero">
+    <p class="hero-label">Creative Engineering</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sortedPackages.map((pkg: CollectionEntry<'packages'>) => (
-            <PackageCard 
-                title={pkg.data.title} 
-                description={pkg.data.description} 
-                category={pkg.data.category}
-                slug={pkg.id} 
-            />
-        ))}
-    </div>
+    <h1>
+      Experimental graphics,
+      tools, and technical systems.
+    </h1>
+  </section>
+
+  <section class="project-grid">
+    <PackageCard
+      title="CTFX"
+      description="Flow mapping and graphics experimentation."
+      image="/ctfx.jpg"
+      href="/docs/ctfx"
+    />
+  </section>
 </Layout>

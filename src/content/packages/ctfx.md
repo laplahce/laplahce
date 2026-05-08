@@ -1,16 +1,14 @@
 ---
-title: "Stylized Water Pro"
-description: "A lightweight, mobile-ready water shader with foam and depth testing."
-category: "Shaders"
+title: CTFX
+description: Flow mapping experiments.
 ---
 
-# Stylized Water Pro
-This is where your **documentation** goes. You can write standard Markdown here.
+# CTFX
 
-### Installation
-1. Download the `.unitypackage`.
-2. Import via `Assets > Import Package`.
+Experimental graphics research package.
 
-### Properties
-- **Wave Speed:** Controls the vertex offset frequency.
-- **Foam Intensity:** Adjusts the edge detection width.
+## Features
+
+- Optical flow
+- Flow maps
+- GPU experimentation

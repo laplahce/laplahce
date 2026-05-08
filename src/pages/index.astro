@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PackageCard from '../components/PackageCard.astro';
+import { getCollection } from 'astro:content';
+
+const packages = await getCollection('packages');
+---
+
+<Layout title="Portfolio">
+	<header class="mb-12">
+		<h1 class="text-4xl font-semibold tracking-tight">Unity Development Portfolio</h1>
+		<p class="text-slate-500 mt-3 max-w-2xl">A modular collection of tools, shaders, and 3D assets designed for performance and scalability.</p>
+	</header>
+
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+		{packages.map(pkg => (
+			<PackageCard 
+				title={pkg.data.title} 
+				description={pkg.data.description} 
+				category={pkg.data.category}
+				slug={pkg.slug}
+			/>
+		))}
+	</div>
+</Layout>

@@ -10,8 +10,8 @@ interface Props {
 export async function getStaticPaths() {
   const packages: CollectionEntry<'packages'>[] = await getCollection('packages');
   
-  return packages.map((pkg: CollectionEntry<'packages'>) => ({
-    params: { id: pkg.id }, 
+  return packages.map((pkg) => ({
+    params: { id: pkg.id.toLowerCase() },
     props: { pkg },
   }));
 }

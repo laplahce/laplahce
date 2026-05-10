@@ -1,9 +1,12 @@
 ---
 title: Water Shader
-description: Flow mapping experiments.
+slug: water-shader
+description: Stylized water shader experimentation.
+cardImage: /water-shader.jpg
+coverImage: /water-shader-cover.jpg
 ---
 
-# Water
+# Water Shader
 
 Experimental graphics research package.
 

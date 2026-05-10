@@ -1,32 +1,77 @@
 /* Project grid and package card styles */
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 32px;
   margin-top: 32px;
 }
+.project-carousel {
+  position: relative;
+}
+.carousel-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 22px;
+  margin: 0 -38px;
+  scroll-padding: 38px;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-slide {
+  flex: 0 0 min(74vw, 300px);
+  scroll-snap-align: center;
+}
 .package-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1px solid transparent;
+  border-radius: 18px;
   text-decoration: none;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
+.package-card::after {
+  content: '↗';
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  color: var(--accent);
+  font-size: 1rem;
+  opacity: 0.75;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.package-card:hover::after {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    margin: 0;
+    padding: 0 8px 16px;
+  }
+}
+
 .package-card:hover {
-  transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
 }
+.card-top {
+  overflow: hidden;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
 .card-image-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: #f8fafc;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
 }
 .card-image-wrapper img {
   width: 100%;
@@ -37,17 +82,22 @@
 .package-card:hover img {
   transform: scale(1.05);
 }
+.card-bottom {
+  padding: 22px;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
 .card-content {
-  padding: 32px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 .card-content h3 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-heading);
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   transition: color 0.2s ease;
 }
 .package-card:hover h3 {

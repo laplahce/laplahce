@@ -1,0 +1,70 @@
+---
+interface Props {
+  markdown: string;
+}
+
+const { markdown } = Astro.props as Props;
+
+// Simple markdown to HTML converter for common patterns
+function simpleMarkdownToHtml(md: string): string {
+  let html = md;
+
+  // Headings
+  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>');
+
+  // Bold
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+  // Italic
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+  // Links
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+
+  // Line breaks to paragraphs
+  const lines = html.split('\n');
+  let output = '';
+  let inParagraph = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      if (inParagraph) {
+        output += '</p>\n';
+        inParagraph = false;
+      }
+      continue;
+    }
+
+    // Check if it's a heading or block element
+    if (trimmed.match(/^<h[1-6]>/) || trimmed.match(/^<(div|ul|ol|blockquote)/)) {
+      if (inParagraph) {
+        output += '</p>\n';
+        inParagraph = false;
+      }
+      output += trimmed + '\n';
+    } else {
+      if (!inParagraph) {
+        output += '<p>';
+        inParagraph = true;
+      }
+      output += (inParagraph ? '\n' : '') + trimmed;
+    }
+  }
+
+  if (inParagraph) {
+    output += '</p>\n';
+  }
+
+  return output;
+}
+
+const html = simpleMarkdownToHtml(markdown);
+---
+
+<Fragment set:html={html} />

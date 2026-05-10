@@ -4,8 +4,9 @@ import "../styles/layout.css";
 import "../styles/responsive.css";
 import Navbar from "../components/Navbar.astro";
 import DocsSidebar from "../components/DocsSidebar.astro";
+import type { LayoutProps } from "../lib/types";
 
-const { title = "Laplahce", headings } = Astro.props;
+const { title = "Laplahce", headings } = Astro.props as LayoutProps;
 ---
 
 <!DOCTYPE html>

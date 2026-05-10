@@ -1,48 +1,50 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PackageCard from "../components/PackageCard.astro";
+import ProjectCarousel from "../components/ProjectCarousel.astro";
+import MarkdownBlock from "../components/MarkdownBlock.astro";
 import "../styles/hero.css";
 import "../styles/project-card.css";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { packagePages, getPackageLink } from "../lib/packages";
+import { getHomePage, splitHomePageByCards } from "../lib/pages";
+import type { Package, CardProps } from "../lib/types";
 
-const packages = (await getCollection("packages")) as CollectionEntry<"packages">[];
-packages.sort((a, b) => a.data.title.localeCompare(b.data.title));
-const imageMap = new Map([
-  ["ctfx", "/ctfx.jpg"],
-  ["water-shader", "/water-shader.jpg"],
-]);
+const packages: Package[] = packagePages;
+const homePage = getHomePage();
+const { heroLabel, heroTitle } = homePage.frontmatter;
+
+const cards: CardProps[] = packages.map(pkg => {
+  const link = getPackageLink(pkg);
+  return {
+    title: pkg.title,
+    description: pkg.description,
+    image: pkg.cardImage,
+    href: link.href,
+  };
+});
+
+const { before: markdownBefore, after: markdownAfter } = splitHomePageByCards(homePage.raw);
 ---
 <Layout title="Laplahce">
   <section id="welcome" class="hero">
-    <p class="hero-label">Creative Engineering</p>
+    <p class="hero-label">{heroLabel}</p>
     <h1>
-      Experimental graphics,
-      tools, and technical systems.
+      {heroTitle}
     </h1>
   </section>
 
+  {markdownBefore && (
+    <section class="markdown-content">
+      <MarkdownBlock markdown={markdownBefore} />
+    </section>
+  )}
+
   <section id="featured-projects" class="project-grid">
-    {packages.map(pkg => (
-      <PackageCard
-        title={pkg.data.title}
-        description={pkg.data.description ?? ""}
-        image={imageMap.get(pkg.slug) ?? "/ctfx.jpg"}
-        href={`/docs/${pkg.slug}`}
-      />
-    ))}
+    <ProjectCarousel cards={cards} />
   </section>
 
-  <section id="about" style="margin-top:48px;">
-    <h2>About</h2>
-    <p>
-      Laplahce is a creative engineering studio focused on experimental graphics, technical art, and interactive tools. We explore the boundaries of real-time graphics, simulation, and digital creativity.
-    </p>
-  </section>
-
-  <section id="contact" style="margin-top:48px;">
-    <h2>Contact</h2>
-    <p>
-      Want to collaborate or have questions? Reach out at <a href="mailto:hello@laplahce.com">hello@laplahce.com</a> or connect on <a href="#">Twitter</a>.
-    </p>
-  </section>
+  {markdownAfter && (
+    <section class="markdown-content">
+      <MarkdownBlock markdown={markdownAfter} />
+    </section>
+  )}
 </Layout>

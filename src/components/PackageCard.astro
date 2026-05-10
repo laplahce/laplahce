@@ -1,5 +1,7 @@
 ---
-const { title, description, image, href } = Astro.props;
+import type { CardProps } from "../lib/types";
+
+const { title, description, image, href } = Astro.props as CardProps;
 ---
 
 <a class="package-card" href={href}>

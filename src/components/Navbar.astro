@@ -1,20 +1,33 @@
 ---
 import "../styles/navbar.css";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { packagePages, getPackageLink } from "../lib/packages";
+import type { NavbarLogo, NavbarDropdown, NavItem } from "../lib/types";
 
-const packages = (await getCollection("packages")).sort((a: CollectionEntry<"packages">, b: CollectionEntry<"packages">) => a.data.title.localeCompare(b.data.title));
+const logo: NavbarLogo = {
+  src: '/ctfx.jpg',
+  alt: 'Logo',
+  label: 'Laplahce',
+};
+
+const productDropdown: NavbarDropdown = {
+  label: 'Products',
+  items: packagePages.map(pkg => {
+    const link = getPackageLink(pkg);
+    return { label: link.title, href: link.href };
+  }),
+};
 ---
 <nav class="nav" aria-label="Main navigation">
   <a href="/" class="nav-logo">
-    <img src="/ctfx.jpg" alt="Logo" class="nav-logo-img" />
-    <span>Laplahce</span>
+    <img src={logo.src} alt={logo.alt} class="nav-logo-img" />
+    <span>{logo.label}</span>
   </a>
   <a href="/">Home</a>
   <div class="nav-dropdown">
-    <button class="nav-dropdown-btn" tabindex="0">Products <span class="nav-caret">▼</span></button>
+    <button class="nav-dropdown-btn" tabindex="0">{productDropdown.label} <span class="nav-caret">▼</span></button>
     <div class="nav-dropdown-content">
-      {packages.map((pkg: CollectionEntry<"packages">) => (
-        <a href={`/docs/${pkg.slug}`}>{pkg.data.title}</a>
+      {productDropdown.items.map(item => (
+        <a href={item.href}>{item.label}</a>
       ))}
     </div>
   </div>

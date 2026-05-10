@@ -1,54 +1,35 @@
 ---
 import "../styles/docs-sidebar.css";
+import type { DocsSidebarProps, SidebarSection, SidebarConfig } from "../lib/types";
 
-// Helper to extract headings from markdown content
-function extractHeadings(content: string) {
-  const headingRegex = /^(##+)\s+(.+)$/gm;
-  const headings = [];
-  let match;
-  while ((match = headingRegex.exec(content)) !== null) {
-    headings.push({
-      level: match[1].length,
-      text: match[2],
-      id: match[2].toLowerCase().replace(/[^a-z0-9]+/g, '-')
-    });
-  }
-  return headings;
-}
-
+const { headings = [] } = Astro.props as DocsSidebarProps;
 const current = Astro.url.pathname;
-let sections = [];
-let sidebarLabel = 'Sections';
+let sidebarConfig: SidebarConfig;
 
 if (current === '/') {
   // Static homepage sections
-  sections = [
+  const sections: SidebarSection[] = [
     { name: 'Welcome', href: '#welcome' },
     { name: 'Featured Projects', href: '#featured-projects' },
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
-  sidebarLabel = 'Home Sections';
+  sidebarConfig = { sections, label: 'Home Sections' };
 } else if (current.startsWith('/docs/')) {
-  // For docs pages, normalize headings from the markdown file
-  const headings = Astro.props.headings || [];
-  sections = headings
-    .map((heading: { text?: string; title?: string; name?: string; href?: string; slug?: string; id?: string }) => {
-      const name = heading.text || heading.title || heading.name;
-      const slug = heading.href?.replace(/^#/, '') || heading.slug || heading.id ||
-        (typeof name === 'string'
-          ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-          : undefined);
-      return name && slug ? { name, href: `#${slug}` } : null;
-    })
-    .filter(Boolean);
-  sidebarLabel = 'On This Page';
+  // For docs pages, use headings from markdown
+  const sections: SidebarSection[] = headings.map(heading => ({
+    name: heading.text,
+    href: `#${heading.id}`,
+  }));
+  sidebarConfig = { sections, label: 'On This Page' };
+} else {
+  sidebarConfig = { sections: [], label: 'Sections' };
 }
 ---
 <nav class="docs-sidebar" aria-label="Section navigation">
-  <div class="sidebar-label">{sidebarLabel}</div>
+  <div class="sidebar-label">{sidebarConfig.label}</div>
   <ul class="sidebar-list">
-    {sections.map((section: { name: string; href: string }) => (
+    {sidebarConfig.sections.map((section: SidebarSection) => (
       <li>
         <a
           href={section.href}

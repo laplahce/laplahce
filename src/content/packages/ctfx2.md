@@ -1,6 +1,6 @@
 ---
-title: CTFX
-slug: ctfx
+title: CTFX2
+slug: ctfx2
 description: Flow mapping experiments.
 cardImage: /ctfx.jpg
 coverImage: /ctfx-cover.jpg

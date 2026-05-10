@@ -1,36 +1,24 @@
 ---
-import {
-  getCollection,
-  render,
-  type CollectionEntry,
-} from "astro:content";
-
 import Layout from "../../layouts/Layout.astro";
-
-interface Props {
-  pkg: CollectionEntry<"packages">;
-}
+import { getPackage, getPackagePaths } from "../../lib/packages";
+import type { Package } from "../../lib/types";
 
 export async function getStaticPaths() {
-  const packages = await getCollection("packages");
-
-  return packages.map((pkg: CollectionEntry<"packages">) => ({
-    params: { id: pkg.slug ?? pkg.id.toLowerCase() },
-    props: { pkg },
-  }));
+  return getPackagePaths();
 }
 
-const { pkg } = Astro.props as Props;
-
-const { Content, headings } = await render(pkg);
+const pkg: Package | undefined = getPackage(Astro.params.id as string);
+if (!pkg) {
+  throw new Error(`Package not found: ${Astro.params.id}`);
+}
 ---
 
-<Layout title={pkg.data.title} headings={headings}>
+<Layout title={pkg.title} headings={pkg.headings}>
   <article class="docs-content">
     <header class="docs-header">
-      <h1>{pkg.data.title}</h1>
-      {pkg.data.description && (<p>{pkg.data.description}</p>)}
+      <h1>{pkg.title}</h1>
+      {pkg.description && (<p>{pkg.description}</p>)}
     </header>
-    <Content />
+    <pkg.Content />
   </article>
 </Layout>

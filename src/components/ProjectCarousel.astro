@@ -1,0 +1,28 @@
+---
+import type { CardProps } from "../lib/types";
+
+const { cards } = Astro.props as { cards: CardProps[] };
+---
+
+<div class="project-carousel">
+  <div class="carousel-track" role="list">
+    {cards.map((card, index) => (
+      <div class="carousel-slide" role="listitem" data-index={index}>
+        <a class="package-card" href={card.href}>
+          <div class="card-top">
+            <div class="card-image-wrapper">
+              <img src={card.image} alt={card.title} loading="lazy" />
+            </div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-content">
+              <div class="gradient-line"></div>
+              <h3>{card.title}</h3>
+              <p>{card.description}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    ))}
+  </div>
+</div>

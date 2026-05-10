@@ -91,6 +91,7 @@
 }
 .nav-caret {
   margin-left: 6px;
+  margin-top: 2px;
   font-size: 0.75em;
   opacity: 0.6;
 }

@@ -3,6 +3,14 @@ import Layout from "../layouts/Layout.astro";
 import PackageCard from "../components/PackageCard.astro";
 import "../styles/hero.css";
 import "../styles/project-card.css";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const packages = (await getCollection("packages")) as CollectionEntry<"packages">[];
+packages.sort((a, b) => a.data.title.localeCompare(b.data.title));
+const imageMap = new Map([
+  ["ctfx", "/ctfx.jpg"],
+  ["water-shader", "/water-shader.jpg"],
+]);
 ---
 <Layout title="Laplahce">
   <section id="welcome" class="hero">
@@ -14,36 +22,14 @@ import "../styles/project-card.css";
   </section>
 
   <section id="featured-projects" class="project-grid">
-    <PackageCard
-      title="CTFX"
-      description="Flow mapping and graphics experimentation."
-      image="/ctfx.jpg"
-      href="/docs/ctfx"
-    />
-    <PackageCard
-      title="Water Shader"
-      description="Water shader experimentation."
-      image="/water-shader.jpg"
-      href="/docs/water-shader"
-    />
-    <PackageCard
-      title="CTFX2"
-      description="Flow mapping and graphics experimentation."
-      image="/ctfx.jpg"
-      href="/docs/ctfx2"
-    />
-    <PackageCard
-      title="Realistic VFX Pack"
-      description="Realistic visual effects for game development."
-      image="/ctfx.jpg"
-      href="/docs/realistic-vfx-pack"
-    />
-    <PackageCard
-      title="Voxels"
-      description="Voxel-based graphics experimentation."
-      image="/ctfx.jpg"
-      href="/docs/voxels"
-    />
+    {packages.map(pkg => (
+      <PackageCard
+        title={pkg.data.title}
+        description={pkg.data.description ?? ""}
+        image={imageMap.get(pkg.slug) ?? "/ctfx.jpg"}
+        href={`/docs/${pkg.slug}`}
+      />
+    ))}
   </section>
 
   <section id="about" style="margin-top:48px;">

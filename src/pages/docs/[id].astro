@@ -15,7 +15,7 @@ export async function getStaticPaths() {
   const packages = await getCollection("packages");
 
   return packages.map((pkg: CollectionEntry<"packages">) => ({
-    params: { id: pkg.id.toLowerCase() },
+    params: { id: pkg.slug ?? pkg.id.toLowerCase() },
     props: { pkg },
   }));
 }

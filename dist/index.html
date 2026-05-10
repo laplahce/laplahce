@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Laplahce</title><link rel="stylesheet" href="/_astro/Layout.EBEyoZ4d.css">
+<style>.hero{padding:24px 0 64px;border-bottom:1px solid var(--border);margin-bottom:64px}.hero-label{letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-size:.85rem;margin-bottom:12px;font-weight:600}.hero h1{font-size:3rem;font-weight:800;color:var(--text-heading);letter-spacing:-.03em;line-height:1.1;max-width:850px;margin:0}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:32px;margin-top:32px}.package-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:12px;text-decoration:none;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}.package-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 20px 25px -5px #0000000d,0 10px 10px -5px #00000005}.card-image-wrapper{position:relative;width:100%;aspect-ratio:16 / 9;background:#f8fafc;overflow:hidden;border-bottom:1px solid var(--border)}.card-image-wrapper img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.package-card:hover img{transform:scale(1.05)}.card-content{padding:32px;display:flex;flex-direction:column;flex-grow:1}.card-content h3{font-size:1.25rem;font-weight:600;color:var(--text-heading);margin:0 0 12px;transition:color .2s ease}.package-card:hover h3{color:var(--accent)}.card-content p{font-size:.95rem;line-height:1.6;color:var(--muted);margin:0}.gradient-line{width:24px;height:2px;background:var(--accent);margin-bottom:20px;transition:width .3s ease}.package-card:hover .gradient-line{width:48px}
+</style></head> <body> <div class="noise"></div> <nav class="nav" aria-label="Main navigation"> <a href="/" class="nav-logo"> <img src="/ctfx.jpg" alt="Logo" class="nav-logo-img"> <span>Laplahce</span> </a> <a href="/">Home</a> <div class="nav-dropdown"> <button class="nav-dropdown-btn" tabindex="0">Products <span class="nav-caret">▼</span></button> <div class="nav-dropdown-content"> <a href="/docs/ctfx">CTFX</a><a href="/docs/water-shader">Water Shader</a> </div> </div> <a href="#portfolio">Portfolio</a> <a href="#support">Support</a> </nav> <div class="wiki-shell"> <aside class="wiki-sidebar wiki-sidebar-left"> <nav class="docs-sidebar" aria-label="Section navigation"> <div class="sidebar-label">Home Sections</div> <ul class="sidebar-list"> <li> <a href="#welcome" class data-section="welcome"> Welcome </a> </li><li> <a href="#featured-projects" class data-section="featured-projects"> Featured Projects </a> </li><li> <a href="#about" class data-section="about"> About </a> </li><li> <a href="#contact" class data-section="contact"> Contact </a> </li> </ul> <script type="module">
+    // Scrollspy logic
+    const links = Array.from(document.querySelectorAll('.docs-sidebar a[data-section]'));
+    const sectionIds = links.map(link => (link.getAttribute('href') || '').replace('#', ''));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    function onScroll() {
+      let activeIndex = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= 120) {
+          activeIndex = i;
+        }
+      }
+      links.forEach((link, i) => {
+        if (i === activeIndex) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script> </nav> </aside> <main>  <section id="welcome" class="hero"> <p class="hero-label">Creative Engineering</p> <h1>
+Experimental graphics,
+      tools, and technical systems.
+</h1> </section> <section id="featured-projects" class="project-grid"> <a class="package-card" href="/docs/ctfx"> <div class="card-image-wrapper"> <img src="/ctfx.jpg" alt="CTFX" loading="lazy"> </div> <div class="card-content"> <div class="gradient-line"></div> <h3>CTFX</h3> <p>Flow mapping and graphics experimentation.</p> </div> </a> <a class="package-card" href="/docs/water-shader"> <div class="card-image-wrapper"> <img src="/water-shader.jpg" alt="Water Shader" loading="lazy"> </div> <div class="card-content"> <div class="gradient-line"></div> <h3>Water Shader</h3> <p>Water shader experimentation.</p> </div> </a> <a class="package-card" href="/docs/ctfx2"> <div class="card-image-wrapper"> <img src="/ctfx.jpg" alt="CTFX2" loading="lazy"> </div> <div class="card-content"> <div class="gradient-line"></div> <h3>CTFX2</h3> <p>Flow mapping and graphics experimentation.</p> </div> </a> <a class="package-card" href="/docs/realistic-vfx-pack"> <div class="card-image-wrapper"> <img src="/ctfx.jpg" alt="Realistic VFX Pack" loading="lazy"> </div> <div class="card-content"> <div class="gradient-line"></div> <h3>Realistic VFX Pack</h3> <p>Realistic visual effects for game development.</p> </div> </a> <a class="package-card" href="/docs/voxels"> <div class="card-image-wrapper"> <img src="/ctfx.jpg" alt="Voxels" loading="lazy"> </div> <div class="card-content"> <div class="gradient-line"></div> <h3>Voxels</h3> <p>Voxel-based graphics experimentation.</p> </div> </a> </section> <section id="about" style="margin-top:48px;"> <h2>About</h2> <p>
+Laplahce is a creative engineering studio focused on experimental graphics, technical art, and interactive tools. We explore the boundaries of real-time graphics, simulation, and digital creativity.
+</p> </section> <section id="contact" style="margin-top:48px;"> <h2>Contact</h2> <p>
+Want to collaborate or have questions? Reach out at <a href="mailto:hello@laplahce.com">hello@laplahce.com</a> or connect on <a href="#">Twitter</a>.
+</p> </section>  </main> <aside class="wiki-sidebar wiki-sidebar-right"> <!-- Right sidebar: add widgets, ads, or extra info here --> </aside> </div> </body></html>

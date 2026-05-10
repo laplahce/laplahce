@@ -30,9 +30,18 @@ if (current === '/') {
   ];
   sidebarLabel = 'Home Sections';
 } else if (current.startsWith('/docs/')) {
-  // For docs pages, try to extract headings from the markdown file
-  // This requires the parent to pass the headings as a prop
-  sections = Astro.props.headings || [];
+  // For docs pages, normalize headings from the markdown file
+  const headings = Astro.props.headings || [];
+  sections = headings
+    .map((heading: { text?: string; title?: string; name?: string; href?: string; slug?: string; id?: string }) => {
+      const name = heading.text || heading.title || heading.name;
+      const slug = heading.href?.replace(/^#/, '') || heading.slug || heading.id ||
+        (typeof name === 'string'
+          ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+          : undefined);
+      return name && slug ? { name, href: `#${slug}` } : null;
+    })
+    .filter(Boolean);
   sidebarLabel = 'On This Page';
 }
 ---
@@ -44,7 +53,7 @@ if (current === '/') {
         <a
           href={section.href}
           class={current === section.href ? 'active' : ''}
-          data-section={section.href.replace('#', '')}
+          data-section={section.href?.replace('#', '')}
         >
           {section.name}
         </a>
@@ -55,7 +64,7 @@ if (current === '/') {
   <script type="module">
     // Scrollspy logic
     const links = Array.from(document.querySelectorAll('.docs-sidebar a[data-section]'));
-    const sectionIds = links.map(link => link.getAttribute('href').replace('#', ''));
+    const sectionIds = links.map(link => (link.getAttribute('href') || '').replace('#', ''));
     const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     function onScroll() {
       let activeIndex = 0;

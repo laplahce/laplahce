@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Stylized Water Pro</title><link rel="stylesheet" href="/_astro/Layout.EBEyoZ4d.css"></head> <body> <div class="noise"></div> <nav class="nav" aria-label="Main navigation"> <a href="/" class="nav-logo"> <img src="/ctfx.jpg" alt="Logo" class="nav-logo-img"> <span>Laplahce</span> </a> <a href="/">Home</a> <div class="nav-dropdown"> <button class="nav-dropdown-btn" tabindex="0">Products <span class="nav-caret">▼</span></button> <div class="nav-dropdown-content"> <a href="/docs/ctfx">CTFX</a><a href="/docs/water-shader">Water Shader</a> </div> </div> <a href="#portfolio">Portfolio</a> <a href="#support">Support</a> </nav> <div class="wiki-shell"> <aside class="wiki-sidebar wiki-sidebar-left"> <nav class="docs-sidebar" aria-label="Section navigation"> <div class="sidebar-label">On This Page</div> <ul class="sidebar-list">  </ul> <script type="module">
+    // Scrollspy logic
+    const links = Array.from(document.querySelectorAll('.docs-sidebar a[data-section]'));
+    const sectionIds = links.map(link => (link.getAttribute('href') || '').replace('#', ''));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    function onScroll() {
+      let activeIndex = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= 120) {
+          activeIndex = i;
+        }
+      }
+      links.forEach((link, i) => {
+        if (i === activeIndex) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script> </nav> </aside> <main>  <div class="docs-layout"> <nav class="docs-sidebar" aria-label="Section navigation"> <div class="sidebar-label">On This Page</div> <ul class="sidebar-list"> <li> <a href="#stylized-water-pro" class data-section="stylized-water-pro"> Stylized Water Pro </a> </li><li> <a href="#installation" class data-section="installation"> Installation </a> </li><li> <a href="#properties" class data-section="properties"> Properties </a> </li> </ul> <script type="module">
+    // Scrollspy logic
+    const links = Array.from(document.querySelectorAll('.docs-sidebar a[data-section]'));
+    const sectionIds = links.map(link => (link.getAttribute('href') || '').replace('#', ''));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    function onScroll() {
+      let activeIndex = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= 120) {
+          activeIndex = i;
+        }
+      }
+      links.forEach((link, i) => {
+        if (i === activeIndex) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script> </nav> <article class="docs-content">  <article class="docs-content"> <header class="docs-header"> <h1>Stylized Water Pro</h1> <p>A lightweight, mobile-ready water shader with foam and depth testing.</p> </header> <h1 id="stylized-water-pro">Stylized Water Pro</h1>
+<p>This is where your <strong>documentation</strong> goes. You can write standard Markdown here.</p>
+<h3 id="installation">Installation</h3>
+<ol>
+<li>Download the <code>.unitypackage</code>.</li>
+<li>Import via <code>Assets > Import Package</code>.</li>
+</ol>
+<h3 id="properties">Properties</h3>
+<ul>
+<li><strong>Wave Speed:</strong> Controls the vertex offset frequency.</li>
+<li><strong>Foam Intensity:</strong> Adjusts the edge detection width.</li>
+</ul> </article>  </article> </div>  </main> <aside class="wiki-sidebar wiki-sidebar-right"> <!-- Right sidebar: add widgets, ads, or extra info here --> </aside> </div> </body></html>

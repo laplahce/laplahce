@@ -5,7 +5,7 @@ import "../styles/responsive.css";
 import Navbar from "../components/Navbar.astro";
 import DocsSidebar from "../components/DocsSidebar.astro";
 
-const { title = "Laplahce" } = Astro.props;
+const { title = "Laplahce", headings } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ const { title = "Laplahce" } = Astro.props;
 
     <div class="wiki-shell">
       <aside class="wiki-sidebar wiki-sidebar-left">
-        <DocsSidebar />
+        <DocsSidebar headings={headings} />
       </aside>
       <main>
         <slot />

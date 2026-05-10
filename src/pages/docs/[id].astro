@@ -5,7 +5,7 @@ import {
   type CollectionEntry,
 } from "astro:content";
 
-import DocsLayout from "../../layouts/DocsLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 
 interface Props {
   pkg: CollectionEntry<"packages">;
@@ -25,7 +25,7 @@ const { pkg } = Astro.props as Props;
 const { Content, headings } = await render(pkg);
 ---
 
-<DocsLayout title={pkg.data.title} headings={headings}>
+<Layout title={pkg.data.title} headings={headings}>
   <article class="docs-content">
     <header class="docs-header">
       <h1>{pkg.data.title}</h1>
@@ -33,4 +33,4 @@ const { Content, headings } = await render(pkg);
     </header>
     <Content />
   </article>
-</DocsLayout>
+</Layout>

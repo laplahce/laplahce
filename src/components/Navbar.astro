@@ -13,7 +13,7 @@ const packages = (await getCollection("packages")).sort((a: CollectionEntry<"pac
   <div class="nav-dropdown">
     <button class="nav-dropdown-btn" tabindex="0">Products <span class="nav-caret">▼</span></button>
     <div class="nav-dropdown-content">
-      {packages.map(pkg: CollectionEntry<"packages"> => (
+      {packages.map((pkg: CollectionEntry<"packages">) => (
         <a href={`/docs/${pkg.slug}`}>{pkg.data.title}</a>
       ))}
     </div>

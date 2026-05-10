@@ -13,7 +13,7 @@
   font-weight: 600;
 }
 .hero h1 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   color: var(--text-heading);
   letter-spacing: -0.03em;

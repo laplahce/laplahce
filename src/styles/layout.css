@@ -1,9 +1,11 @@
 /* Wiki shell layout and sidebar */
 .wiki-shell {
   display: grid;
-  grid-template-columns: 260px min(1000px, 100vw - 320px) 1fr;
+  grid-template-columns: 260px minmax(0, 1fr) 260px;
   gap: 0;
   min-height: calc(100vh - 60px);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 main {
   width: 100%;
@@ -11,6 +13,10 @@ main {
   padding: 64px 80px 120px 80px;
   min-height: 100vh;
   border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 .wiki-sidebar {
   display: flex;

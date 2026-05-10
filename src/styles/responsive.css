@@ -1,0 +1,24 @@
+/* Responsive breakpoints and overrides */
+@media (max-width: 1200px) {
+  .wiki-shell {
+    grid-template-columns: 240px 1fr 0;
+  }
+  .wiki-sidebar-right {
+    display: none;
+  }
+  main {
+    padding: 40px 48px;
+  }
+}
+@media (max-width: 900px) {
+  .wiki-shell {
+    grid-template-columns: 1fr;
+  }
+  .wiki-sidebar-left {
+    display: none;
+  }
+  main {
+    padding: 32px 24px;
+    border-left: none;
+  }
+}

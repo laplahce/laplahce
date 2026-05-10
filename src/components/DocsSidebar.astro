@@ -1,5 +1,79 @@
-<aside class="docs-sidebar">
-  <p class="sidebar-label">Documentation</p>
+---
+import "../styles/docs-sidebar.css";
 
-  <a href="/docs/ctfx">CTFX</a>
-</aside>
+// Helper to extract headings from markdown content
+function extractHeadings(content: string) {
+  const headingRegex = /^(##+)\s+(.+)$/gm;
+  const headings = [];
+  let match;
+  while ((match = headingRegex.exec(content)) !== null) {
+    headings.push({
+      level: match[1].length,
+      text: match[2],
+      id: match[2].toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    });
+  }
+  return headings;
+}
+
+const current = Astro.url.pathname;
+let sections = [];
+let sidebarLabel = 'Sections';
+
+if (current === '/') {
+  // Static homepage sections
+  sections = [
+    { name: 'Welcome', href: '#welcome' },
+    { name: 'Featured Projects', href: '#featured-projects' },
+    { name: 'About', href: '#about' },
+    { name: 'Contact', href: '#contact' },
+  ];
+  sidebarLabel = 'Home Sections';
+} else if (current.startsWith('/docs/')) {
+  // For docs pages, try to extract headings from the markdown file
+  // This requires the parent to pass the headings as a prop
+  sections = Astro.props.headings || [];
+  sidebarLabel = 'On This Page';
+}
+---
+<nav class="docs-sidebar" aria-label="Section navigation">
+  <div class="sidebar-label">{sidebarLabel}</div>
+  <ul class="sidebar-list">
+    {sections.map((section: { name: string; href: string }) => (
+      <li>
+        <a
+          href={section.href}
+          class={current === section.href ? 'active' : ''}
+          data-section={section.href.replace('#', '')}
+        >
+          {section.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <script type="module">
+    // Scrollspy logic
+    const links = Array.from(document.querySelectorAll('.docs-sidebar a[data-section]'));
+    const sectionIds = links.map(link => link.getAttribute('href').replace('#', ''));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    function onScroll() {
+      let activeIndex = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= 120) {
+          activeIndex = i;
+        }
+      }
+      links.forEach((link, i) => {
+        if (i === activeIndex) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
+</nav>

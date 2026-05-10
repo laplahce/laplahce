@@ -1,24 +1,62 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PackageCard from "../components/PackageCard.astro";
+import "../styles/hero.css";
+import "../styles/project-card.css";
 ---
-
 <Layout title="Laplahce">
-  <section class="hero">
+  <section id="welcome" class="hero">
     <p class="hero-label">Creative Engineering</p>
-
     <h1>
       Experimental graphics,
       tools, and technical systems.
     </h1>
   </section>
 
-  <section class="project-grid">
+  <section id="featured-projects" class="project-grid">
     <PackageCard
       title="CTFX"
       description="Flow mapping and graphics experimentation."
       image="/ctfx.jpg"
       href="/docs/ctfx"
     />
+    <PackageCard
+      title="Water Shader"
+      description="Water shader experimentation."
+      image="/water-shader.jpg"
+      href="/docs/water-shader"
+    />
+    <PackageCard
+      title="CTFX2"
+      description="Flow mapping and graphics experimentation."
+      image="/ctfx.jpg"
+      href="/docs/ctfx2"
+    />
+    <PackageCard
+      title="Realistic VFX Pack"
+      description="Realistic visual effects for game development."
+      image="/ctfx.jpg"
+      href="/docs/realistic-vfx-pack"
+    />
+    <PackageCard
+      title="Voxels"
+      description="Voxel-based graphics experimentation."
+      image="/ctfx.jpg"
+      href="/docs/voxels"
+    />
+  </section>
+
+  <section id="about" style="margin-top:48px;">
+    <h2>About</h2>
+    <p>
+      Laplahce is a creative engineering studio focused on experimental graphics, technical art, and interactive tools. We explore the boundaries of real-time graphics, simulation, and digital creativity.
+    </p>
+  </section>
+
+  <section id="contact" style="margin-top:48px;">
+    <h2>Contact</h2>
+    <p>
+      Want to collaborate or have questions? Reach out at <a href="mailto:hello@laplahce.com">hello@laplahce.com</a> or connect on <a href="#">Twitter</a>.
+    </p>
   </section>
 </Layout>

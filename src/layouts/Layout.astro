@@ -1,6 +1,9 @@
 ---
-import "../styles/global.css";
+import "../styles/base.css";
+import "../styles/layout.css";
+import "../styles/responsive.css";
 import Navbar from "../components/Navbar.astro";
+import DocsSidebar from "../components/DocsSidebar.astro";
 
 const { title = "Laplahce" } = Astro.props;
 ---
@@ -18,8 +21,16 @@ const { title = "Laplahce" } = Astro.props;
 
     <Navbar />
 
-    <main>
-      <slot />
-    </main>
+    <div class="wiki-shell">
+      <aside class="wiki-sidebar wiki-sidebar-left">
+        <DocsSidebar />
+      </aside>
+      <main>
+        <slot />
+      </main>
+      <aside class="wiki-sidebar wiki-sidebar-right">
+        <!-- Right sidebar: add widgets, ads, or extra info here -->
+      </aside>
+    </div>
   </body>
 </html>

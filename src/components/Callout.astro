@@ -1,0 +1,6 @@
+---
+const { type = "info" } = Astro.props;
+---
+<div class={"callout callout-" + type}>
+  <slot />
+</div>

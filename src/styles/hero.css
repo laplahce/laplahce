@@ -1,0 +1,23 @@
+/* Hero section styles */
+.hero {
+  padding: 24px 0 64px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+.hero-label {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 850px;
+  margin: 0;
+}

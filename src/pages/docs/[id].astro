@@ -22,21 +22,15 @@ export async function getStaticPaths() {
 
 const { pkg } = Astro.props as Props;
 
-const { Content } = await render(pkg);
+const { Content, headings } = await render(pkg);
 ---
 
-<DocsLayout title={pkg.data.title}>
+<DocsLayout title={pkg.data.title} headings={headings}>
   <article class="docs-content">
     <header class="docs-header">
       <h1>{pkg.data.title}</h1>
-
-      {
-        pkg.data.description && (
-          <p>{pkg.data.description}</p>
-        )
-      }
+      {pkg.data.description && (<p>{pkg.data.description}</p>)}
     </header>
-
     <Content />
   </article>
 </DocsLayout>

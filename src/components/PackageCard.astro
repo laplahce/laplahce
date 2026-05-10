@@ -4,14 +4,12 @@ const { title, description, image, href } = Astro.props;
 
 <a class="package-card" href={href}>
   <div class="card-image-wrapper">
-    <img src={image} alt={title} />
+    <img src={image} alt={title} loading="lazy" />
   </div>
 
   <div class="card-content">
     <div class="gradient-line"></div>
-
     <h3>{title}</h3>
-
     <p>{description}</p>
   </div>
 </a>

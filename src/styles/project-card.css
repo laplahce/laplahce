@@ -1,121 +1,231 @@
-/* Project grid and package card styles */
+/* =========================
+   PROJECT CAROUSEL BASE
+========================= */
+
 .project-grid {
   margin-top: 32px;
+  min-width: 0;
 }
+
 .project-carousel {
   position: relative;
+  width: 100%;
+  min-width: 0;
 }
+
+/* =========================
+   TRACK (DRAGGABLE)
+========================= */
+
 .carousel-track {
   display: flex;
-  gap: 18px;
+  gap: 12px; /* Smaller padding between cards */
+
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 22px;
-  margin: 0 -38px;
-  scroll-padding: 38px;
+  overflow-y: visible;
+
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  padding: 40px 20px 40px;
+
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  scroll-behavior: smooth;
 }
+
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
-.carousel-slide {
-  flex: 0 0 clamp(280px, 30vw, 350px);
-  scroll-snap-align: center;
+
+.carousel-track.dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
 }
+
+/* =========================
+   SLIDES (LESS WIDE, SLIGHTLY BIGGER)
+========================= */
+
+.carousel-slide {
+  /* Narrowed width as requested */
+  flex: 0 0 clamp(240px, 26vw, 300px);
+  max-width: 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+
+  position: relative;
+
+  /* Increased base scale slightly (0.92 -> 0.94) */
+  transform: scale(0.94);
+  transform-origin: center;
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+/* =========================
+   HOVER DEPTH SYSTEM
+========================= */
+
+.project-carousel:hover .carousel-slide {
+  filter: blur(2px);
+  transform: scale(0.9);
+}
+
+.project-carousel:hover .carousel-slide:hover {
+  filter: none;
+  transform: scale(1.02); /* Slightly larger pop on hover */
+  z-index: 10;
+}
+
+/* =========================
+   CARD BASE
+========================= */
+
 .package-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border: 1px solid transparent;
-  border-radius: 18px;
-  text-decoration: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+
+  text-decoration: none;
+
+  /* Purple gradient */
+  background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-.package-card::after {
-  content: '↗';
+
+/* =========================
+   BLUR BACKGROUND LAYER
+========================= */
+
+.card-blur-layer {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
-  color: var(--accent);
-  font-size: 1rem;
-  opacity: 0.75;
-  transition: transform 0.3s ease, opacity 0.2s ease;
+  inset: 0;
+  z-index: 0;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-.package-card:hover::after {
-  transform: translateX(4px);
+
+.package-card:hover .card-blur-layer {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .carousel-track {
-    margin: 0;
-    padding: 0 8px 16px;
-  }
+.card-top,
+.card-bottom {
+  position: relative;
+  z-index: 1;
 }
 
-.package-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-}
-.card-top {
-  overflow: hidden;
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
-}
+/* =========================
+   IMAGE
+========================= */
 
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #f8fafc;
+  aspect-ratio: 16 / 10; /* Balanced ratio for less wide cards */
+  background: #1a1a1a;
   overflow: hidden;
 }
+
 .card-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
+
 .package-card:hover img {
   transform: scale(1.05);
 }
+
+/* =========================
+   BOTTOM SECTION (SHORTENED)
+========================= */
+
 .card-bottom {
-  padding: 22px;
-  background: #fff;
-  border-top: 1px solid var(--border);
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 18px;
+  padding: 14px 18px; /* Compact padding */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .card-content {
   display: flex;
   flex-direction: column;
 }
+
 .card-content h3 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: var(--text-heading);
-  margin: 0 0 10px 0;
-  transition: color 0.2s ease;
+  color: #ffffff;
+  margin: 0 0 4px 0;
 }
-.package-card:hover h3 {
-  color: var(--accent);
-}
+
 .card-content p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
+
+/* =========================
+   DECOR LINE (ANIMATES TO WHITE)
+========================= */
+
 .gradient-line {
-  width: 24px;
+  width: 20px;
   height: 2px;
-  background: var(--accent);
-  margin-bottom: 20px;
-  transition: width 0.3s ease;
+  background: var(--accent); /* Start with your accent color */
+  margin-bottom: 12px;
+  transition: width 0.3s ease, background-color 0.3s ease;
 }
+
 .package-card:hover .gradient-line {
-  width: 48px;
+  width: 45px;
+  background-color: #ffffff; /* Turns white on hover */
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .carousel-slide {
+    flex: 0 0 260px;
+    transform: scale(0.96);
+  }
+  
+  .carousel-track {
+    gap: 10px;
+  }
 }

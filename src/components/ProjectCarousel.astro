@@ -9,20 +9,83 @@ const { cards } = Astro.props as { cards: CardProps[] };
     {cards.map((card, index) => (
       <div class="carousel-slide" role="listitem" data-index={index}>
         <a class="package-card" href={card.href}>
-          <div class="card-top">
-            <div class="card-image-wrapper">
-              <img src={card.image} alt={card.title} loading="lazy" />
-            </div>
+        <div class="card-blur-layer"></div>
+
+        <div class="card-top">
+          <div class="card-image-wrapper">
+            <img src={card.image} alt={card.title} loading="lazy" />
           </div>
-          <div class="card-bottom">
-            <div class="card-content">
-              <div class="gradient-line"></div>
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-            </div>
+        </div>
+
+        <div class="card-bottom">
+          <div class="card-content">
+            <div class="gradient-line"></div>
+            <h3>{card.title}</h3>
+            <p>{card.description}</p>
           </div>
-        </a>
+        </div>
+      </a>
       </div>
     ))}
   </div>
 </div>
+
+<script is:inline>
+  const track = document.querySelector('.carousel-track');
+
+  if (track) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    const stopImgDrag = (e) => e.preventDefault();
+
+    track.querySelectorAll("img").forEach(img => {
+      img.addEventListener("dragstart", stopImgDrag);
+    });
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      track.classList.add('dragging');
+
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+
+    track.addEventListener('mouseleave', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+    });
+
+    track.addEventListener('mouseup', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+    });
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.2;
+
+      track.scrollLeft = scrollLeft - walk;
+    });
+
+    // touch
+    let startTouchX = 0;
+    let touchScrollLeft = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      startTouchX = e.touches[0].pageX;
+      touchScrollLeft = track.scrollLeft;
+    });
+
+    track.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX;
+      const walk = (x - startTouchX) * 1.2;
+
+      track.scrollLeft = touchScrollLeft - walk;
+    });
+  }
+</script>

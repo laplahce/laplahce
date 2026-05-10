@@ -1,10 +1,7 @@
 /* Responsive breakpoints and overrides */
 @media (max-width: 1200px) {
   .wiki-shell {
-    grid-template-columns: 240px minmax(0, 1fr) 240px;
-  }
-  .wiki-sidebar-right {
-    display: none;
+    grid-template-columns: 240px 1fr;
   }
   main {
     padding: 40px 48px;
@@ -14,13 +11,18 @@
   .wiki-shell {
     grid-template-columns: 1fr;
     max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
   }
-  .wiki-sidebar-left {
+  .wiki-sidebar-left,
+  .wiki-sidebar-right {
     display: none;
   }
   main {
     padding: 32px 24px;
     border-left: none;
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -116,6 +118,11 @@
   .docs-sidebar a {
     padding: 4px 0 4px 8px;
     font-size: 0.9rem;
+  }
+
+  /* Main content */
+  main {
+    padding: 16px 12px;
   }
 
   /* Docs layout */
@@ -255,7 +262,7 @@
 }
 
 /* Medium devices (tablets 768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 900px) and (max-width: 1023px) {
   /* Navbar */
   .nav {
     padding: 0 24px;

@@ -9,5 +9,14 @@
 }
 
 .docs-content {
-  max-width: 800px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .docs-layout {
+    display: block;
+  }
+  .docs-layout > :first-child {
+    display: none;
+  }
 }
